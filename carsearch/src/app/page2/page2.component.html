@@ -1,0 +1,33 @@
+<form #formpart2="ngForm" (ngSubmit)="signin(formpart2)">
+  <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Features:</label>
+    <div>
+      <input type="checkbox" id="scales" name="features"
+             value="GPS"  ngModel/>
+      <label for="scales">GPS</label>
+      <div>
+          <input type="checkbox" id="scales" name="features"
+                 value="Security Lock"  ngModel/>
+          <label for="scales">Security Lock</label>
+      </div>
+      <div>
+          <input type="checkbox" id="scales" name="features"
+                 value="Cargo Mat"  ngModel/>
+          <label for="scales">Cargo Mat</label>
+      </div>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Purchase Date:</label>
+      <div class="col-sm-5">
+        <input type="date" class="form-control" id="inputEmail3" placeholder="From" ngModel name="purchaseDate">
+      </div>
+    </div>
+  
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
