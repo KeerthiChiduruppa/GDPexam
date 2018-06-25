@@ -5,7 +5,7 @@ make: String,
 model: String,
 year: Number,
 type: String,
-features: String,
+Features: [String],
 purchaseDate: Date,
 
 });

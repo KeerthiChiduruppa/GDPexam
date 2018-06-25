@@ -16,6 +16,19 @@ export class Page2Component implements OnInit {
   
     signin(form){
         var formpart1 = this.http.getForm()
+        var Features = []
+        if(form.value.GPS){
+          Features.push('GPS')
+        }
+
+        if(form.value ['Security Lock']){
+          Features.push('Security Lock')
+        }
+
+        if(form.value ['Cargo Mat']){
+          Features.push('Cargo Mat')
+        }
+        form.value.Features = Features
         this.http.setForm({...formpart1,...form.value})
         this.http.postService().subscribe(
           res => {

@@ -334,7 +334,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form #formpart2=\"ngForm\" (ngSubmit)=\"signin(formpart2)\">\n  <div class=\"form-group row\">\n      <label for=\"inputPassword3\" class=\"col-sm-2 col-form-label\">Features:</label>\n    <div>\n      <input type=\"checkbox\" id=\"scales\" name=\"features\"\n             value=\"GPS\"  ngModel/>\n      <label for=\"scales\">GPS</label>\n      <div>\n          <input type=\"checkbox\" id=\"scales\" name=\"features\"\n                 value=\"Security Lock\"  ngModel/>\n          <label for=\"scales\">Security Lock</label>\n      </div>\n      <div>\n          <input type=\"checkbox\" id=\"scales\" name=\"features\"\n                 value=\"Cargo Mat\"  ngModel/>\n          <label for=\"scales\">Cargo Mat</label>\n      </div>\n  </div>\n  </div>\n  \n  <div class=\"form-group row\">\n      <label for=\"inputEmail3\" class=\"col-sm-2 col-form-label\">Purchase Date:</label>\n      <div class=\"col-sm-5\">\n        <input type=\"date\" class=\"form-control\" id=\"inputEmail3\" placeholder=\"From\" ngModel name=\"purchaseDate\">\n      </div>\n    </div>\n  \n  <div class=\"form-group row\">\n    <div class=\"col-sm-10\">\n      <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n    </div>\n  </div>\n</form>"
+module.exports = "<form #formpart2=\"ngForm\" (ngSubmit)=\"signin(formpart2)\">\n  <div class=\"form-group row\">\n      <label for=\"inputPassword3\" class=\"col-sm-2 col-form-label\">Features:</label>\n    <div>\n      <input type=\"checkbox\" id=\"scales\" name=\"GPS\"\n             value=\"GPS\"  ngModel/>\n      <label for=\"scales\">GPS</label>\n      <div>\n          <input type=\"checkbox\" id=\"scales\" name=\"Security Lock\"\n                 value=\"Security Lock\"  ngModel/>\n          <label for=\"scales\">Security Lock</label>\n      </div>\n      <div>\n          <input type=\"checkbox\" id=\"scales\" name=\"Cargo Mat\"\n                 value=\"Cargo Mat\"  ngModel/>\n          <label for=\"scales\">Cargo Mat</label>\n      </div>\n  </div>\n  </div>\n  \n  <div class=\"form-group row\">\n      <label for=\"inputEmail3\" class=\"col-sm-2 col-form-label\">Purchase Date:</label>\n      <div class=\"col-sm-5\">\n        <input type=\"date\" class=\"form-control\" id=\"inputEmail3\" placeholder=\"From\" ngModel name=\"purchaseDate\">\n      </div>\n    </div>\n  \n  <div class=\"form-group row\">\n    <div class=\"col-sm-10\">\n      <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n    </div>\n  </div>\n</form>"
 
 /***/ }),
 
@@ -381,6 +381,17 @@ var Page2Component = /** @class */ (function () {
     Page2Component.prototype.signin = function (form) {
         var _this = this;
         var formpart1 = this.http.getForm();
+        var Features = [];
+        if (form.value.GPS) {
+            Features.push('GPS');
+        }
+        if (form.value['Security Lock']) {
+            Features.push('Security Lock');
+        }
+        if (form.value['Cargo Mat']) {
+            Features.push('Cargo Mat');
+        }
+        form.value.Features = Features;
         this.http.setForm(__assign({}, formpart1, form.value));
         this.http.postService().subscribe(function (res) {
             console.log(res);
@@ -422,7 +433,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>The user selected the following input:</p>\n{{ formData.make }}  {{ formData.model }} {{ formData.year}} {{ formData.type}} with\n{{ formData.features}} accesories on {{ formData.purchaseDate }}\n\n"
+module.exports = "<p>The user selected the following input:</p>\n{{ formData.make }}  {{ formData.model }} {{ formData.year}} {{ formData.type}} with\n{{ formData.Features}} accesories on {{ formData.purchaseDate }} <br>\n\n<p>The user will get {{discount}}% discount.</p>\n\n"
 
 /***/ }),
 
@@ -453,9 +464,13 @@ var Page3Component = /** @class */ (function () {
     function Page3Component(http) {
         this.http = http;
         this.formData = {};
+        this.discount = 0;
     }
     Page3Component.prototype.ngOnInit = function () {
         this.formData = this.http.getForm();
+        var date = new Date(this.formData['purchaseDate']);
+        console.log(date.getDate() % 2);
+        this.discount = date.getDate() % 2 == 0 ? 30 : 40;
         console.log(this.formData);
     };
     Page3Component = __decorate([
